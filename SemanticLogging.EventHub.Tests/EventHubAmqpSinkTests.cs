@@ -21,13 +21,13 @@ namespace SemanticLogging.EventHub.Tests
         [TestMethod]
         public void ShouldFailForNullConnectionString()
         {
-            AssertEx.Throws<ArgumentNullException>(() => new EventHubAmqpSink(null, "eventHubName", Buffering.DefaultBufferingInterval, Buffering.DefaultBufferingCount, Buffering.DefaultMaxBufferSize, TimeSpan.Zero));
+            AssertEx.Throws<ArgumentNullException>(() => new EventHubAmqpSink(null, null, null, null, "eventHubName", Buffering.DefaultBufferingInterval, Buffering.DefaultBufferingCount, Buffering.DefaultMaxBufferSize, TimeSpan.Zero));
         }
 
         [TestMethod]
         public void ShouldFailForNullEventHubName()
         {
-            AssertEx.Throws<ArgumentNullException>(() => new EventHubAmqpSink("connString", null, Buffering.DefaultBufferingInterval, Buffering.DefaultBufferingCount, Buffering.DefaultMaxBufferSize, TimeSpan.Zero));
+            AssertEx.Throws<ArgumentNullException>(() => new EventHubAmqpSink(null, null, null, "connString", null, Buffering.DefaultBufferingInterval, Buffering.DefaultBufferingCount, Buffering.DefaultMaxBufferSize, TimeSpan.Zero));
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace SemanticLogging.EventHub.Tests
                 {
                     Assert.IsInstanceOfType(ex.InnerException, typeof(FlushFailedException));
                 }
-                
+
                 Assert.IsTrue(collectErrorsListener.WrittenEntries.Any(x => x.EventId == 1));
             }
         }
@@ -98,7 +98,7 @@ namespace SemanticLogging.EventHub.Tests
             using (var sink = new EventHubAmqpSink(eventHubClient, Buffering.DefaultBufferingInterval, Buffering.DefaultBufferingCount, Buffering.DefaultMaxBufferSize, TimeSpan.Zero))
             {
                 sink.OnNext(entry);
-                
+
                 await sink.FlushAsync();
             }
 

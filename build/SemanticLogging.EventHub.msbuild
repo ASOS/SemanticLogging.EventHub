@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         ToolsVersion="4.0"
+         DefaultTargets="Default">
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <SolutionDir Condition=" '$(SolutionDir)' == ''">..\..\</SolutionDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <BuildArtifactsDir Include="..\artifacts\" />
+    <PackageOutputDir Include="..\artifacts\packages" />
+    <Solutionfile Include="..\SemanticLogging.EventHub.sln" />
+    <AppProjFiles Include="..\SemanticLogging.EventHub\SemanticLogging.EventHub.csproj" />
+    <NugetExeDir Include=".\" />
+  </ItemGroup>
+
+  <Target Name="Default" DependsOnTargets="Restore; Compile; Package" />
+  <Target Name="DefaultCI" DependsOnTargets="Restore; Compile; Package; Publish" />
+  <Target Name="Restore">
+    <Exec Command="nuget.exe restore ..\SemanticLogging.EventHub.sln" />
+  </Target>  
+  <Target Name="Clean">
+    <RemoveDir Directories="@(BuildArtifactsDir)" />
+  </Target>
+  <Target Name="Init" DependsOnTargets="Clean">
+    <MakeDir Directories="@(BuildArtifactsDir);@(PackageOutputDir)" />
+  </Target>
+  <Target Name="Compile" DependsOnTargets="Init">
+    <MSBuild Projects="@(AppProjFiles)" Targets="Rebuild" Properties="OutDir=%(BuildArtifactsDir.FullPath);Configuration=$(Configuration);SolutionDir=$(SolutionDir)" />
+  </Target>
+  <Target Name="Package">
+    <Exec WorkingDirectory="%(NugetExeDir.FullPath)" Command="nuget.exe pack ..\SemanticLogging.EventHub\SemanticLogging.EventHub.csproj -Build -OutputDirectory ..\artifacts\packages" />
+  </Target>
+  <Target Name="Publish">
+    <Exec WorkingDirectory="%(ScriptsDir.FullPath)" Command="powershell -file .\publish.ps1" />
+  </Target>
+
+</Project>

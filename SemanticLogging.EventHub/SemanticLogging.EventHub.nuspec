@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Asos.SemanticLogging.EventHub</id>
+    <version>0.1.0</version>
+    <title>Asos.SemanticLogging.EventHub</title>
+    <authors>ASOS</authors>
+    <owners>ASOS</owners>
+    <projectUrl>https://github.com/ASOS/SemanticLogging.EventHub</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2013-2016</copyright>
+    <tags>logging monitoring azure eventhub slab sink</tags>
+  </metadata>
+</package>
