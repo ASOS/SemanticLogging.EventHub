@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Asos.SemanticLogging.EventHub</id>
+    <id>Asos.Core.Logging.SemanticLogging.EventHub</id>
     <version>0.1.0</version>
-    <title>Asos.SemanticLogging.EventHub</title>
+    <title>Asos.Core.Logging.SemanticLogging.EventHub</title>
     <authors>ASOS</authors>
     <owners>ASOS</owners>
     <projectUrl>https://github.com/ASOS/SemanticLogging.EventHub</projectUrl>
